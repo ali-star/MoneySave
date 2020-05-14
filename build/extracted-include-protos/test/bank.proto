@@ -1,20 +1,37 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "alista.moneysave.bank";
+option java_package = "alistar.moneysave.bank";
 option java_outer_classname = "BankProto";
 option objc_class_prefix = "BNK";
 
+import "google/protobuf/empty.proto";
+
 package bank;
 
-service Bank {
+service BankService {
+  // Creates a bank
   rpc CreateBank (CreateBankRequest) returns (CreateBankReply) {}
+
+  // Return list of banks
+  rpc GetBanks (google.protobuf.Empty) returns (GetBanksReplay) {}
 }
 
 message CreateBankRequest {
   string name = 1;
+  string persianName = 2;
 }
 
 message CreateBankReply {
   string message = 1;
+}
+
+message Bank {
+  string id = 1;
+  string name = 2;
+  string persianName = 3;
+}
+
+message GetBanksReplay {
+  repeated Bank banks = 1;
 }

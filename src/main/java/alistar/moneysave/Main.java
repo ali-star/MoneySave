@@ -1,27 +1,25 @@
 package alistar.moneysave;
 
-import alista.moneysave.bank.BankGrpc;
-import alista.moneysave.bank.CreateBankReply;
-import alista.moneysave.bank.CreateBankRequest;
 import alista.moneysave.helloworld.GreeterGrpc;
 import alista.moneysave.helloworld.HelloReply;
 import alista.moneysave.helloworld.HelloRequest;
+import alistar.moneysave.bank.BankServiceGrpc;
+import alistar.moneysave.bank.CreateBankReply;
+import alistar.moneysave.bank.CreateBankRequest;
+import alistar.moneysave.bank.GetBanksReplay;
 import alistar.moneysave.data.DataSource;
 import alistar.moneysave.data.Repository;
-import alistar.moneysave.model.Bank;
-import alistar.moneysave.model.Card;
+import alistar.moneysave.entity.Bank;
+import alistar.moneysave.entity.Card;
 import com.google.gson.Gson;
+import com.google.protobuf.Empty;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.ServerServiceDefinition;
-import io.grpc.ServiceDescriptor;
 import io.grpc.protobuf.services.ProtoReflectionService;
 import io.grpc.stub.StreamObserver;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Scanner;
@@ -35,9 +33,10 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static Gson gson = new Gson();
     private static SessionFactory sessionFactory;
+    private static Repository repository;
 
     public static void main(String[] args) {
-        // sessionFactory = new Configuration().configure(new File("hibernate.cfg.xml")).buildSessionFactory();
+        repository = new Repository();
 
         int port = 50051;
 
@@ -226,12 +225,27 @@ public class Main {
 
     }
 
-    static class BankImpl extends BankGrpc.BankImplBase {
+    static class BankImpl extends BankServiceGrpc.BankServiceImplBase {
 
         @Override
         public void createBank(CreateBankRequest request, StreamObserver<CreateBankReply> responseObserver) {
-            CreateBankReply reply = CreateBankReply.newBuilder().setMessage("Bank created:" + request.getName()).build();
+            CreateBankReply reply = CreateBankReply.newBuilder().setMessage("Bank created: id = " + request.getName() + "").build();
+
+            Bank bank = new Bank();
+            bank.setName(request.getName());
+            bank.setPersianName(request.getPersianName());
+            repository.saveBank(bank);
+
             responseObserver.onNext(reply);
+            responseObserver.onCompleted();
+        }
+
+        @Override
+        public void getBanks(Empty request, StreamObserver<GetBanksReplay> responseObserver) {
+            GetBanksReplay.Builder getBanksReplay = GetBanksReplay.newBuilder();
+            getBanksReplay.addBanks(alistar.moneysave.bank.Bank.newBuilder().setName("test").build());
+
+            responseObserver.onNext(getBanksReplay.build());
             responseObserver.onCompleted();
         }
     }

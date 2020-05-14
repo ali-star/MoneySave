@@ -1,6 +1,6 @@
 package alistar.moneysave.data;
 
-import alistar.moneysave.model.Data;
+import alistar.moneysave.entity.Data;
 
 public interface DataSource {
 

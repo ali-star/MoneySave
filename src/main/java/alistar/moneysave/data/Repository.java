@@ -1,16 +1,15 @@
 package alistar.moneysave.data;
 
-import alistar.moneysave.date.CivilDate;
-import alistar.moneysave.date.PersianDate;
-import alistar.moneysave.model.Data;
-import alistar.moneysave.date.utils.CalendarType;
-import alistar.moneysave.date.utils.DateUtils;
+import alistar.moneysave.entity.Bank;
+import alistar.moneysave.entity.Card;
+import alistar.moneysave.entity.Data;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.SessionFactoryObserver;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import java.io.*;
-import java.util.Calendar;
 
 public class Repository implements DataSource {
 
@@ -18,7 +17,47 @@ public class Repository implements DataSource {
     private SessionFactory sessionFactory;
 
     public Repository () {
-        sessionFactory = new Configuration().configure(new File("hibernate.cfg.xml")).buildSessionFactory();
+        Configuration configuration = new Configuration()
+                .addAnnotatedClass(Card.class)
+                .addAnnotatedClass(Bank.class)
+                .configure();
+        StandardServiceRegistry serviceRegistry =
+                new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+
+        configuration.setSessionFactoryObserver(new SessionFactoryObserver() {
+            @Override
+            public void sessionFactoryCreated(SessionFactory factory) {
+                System.out.println("sessionFactoryCreated");
+            }
+
+            @Override
+            public void sessionFactoryClosed(SessionFactory factory) {
+                System.out.println("sessionFactoryClosed");
+            }
+
+            @Override
+            public void sessionFactoryClosing(SessionFactory factory) {
+                System.out.println("sessionFactoryClosing");
+            }
+        });
+
+        try {
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        }
+        catch (Exception e) {
+            StandardServiceRegistryBuilder.destroy(serviceRegistry);
+            e.printStackTrace();
+            System.out.println("cannot create sessionFactory: " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public void saveBank(Bank bank) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(bank);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public boolean isDataExists() {
@@ -91,11 +130,11 @@ public class Repository implements DataSource {
     }
 
     private void calculateSavedMoney () {
-        PersianDate persianDate = new PersianDate(new CivilDate(Calendar.getInstance()));
+        /*PersianDate persianDate = new PersianDate(new CivilDate(Calendar.getInstance()));
         int daysInMonth = DateUtils.getMonthLength(CalendarType.SHAMSI, persianDate.getYear(), persianDate.getMonth());
         int today = persianDate.getDayOfMonth() - 1;
         double averageSpendPerDay = (data.getTotalMoney() - data.getReducedMoney()) / daysInMonth;
         double moneySpent = (data.getTotalMoney() - data.getReducedMoney()) - data.getLeftMoney();
-        data.setSavedMoney((averageSpendPerDay * today) - moneySpent);
+        data.setSavedMoney((averageSpendPerDay * today) - moneySpent);*/
     }
 }

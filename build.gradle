@@ -36,6 +36,7 @@ dependencies {
     runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
 
     implementation "org.hibernate:hibernate-core:5.4.15.Final"
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.4'
 
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
     testImplementation "junit:junit:4.12"
