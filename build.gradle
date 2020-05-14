@@ -1,22 +1,17 @@
 plugins {
-    // Provide convenience executables for trying out the examples.
-    id 'application'
-    // ASSUMES GRADLE 2.12 OR HIGHER. Use plugin version 0.7.5 with earlier gradle versions
-    id 'com.google.protobuf' version '0.8.8'
-    // Generate IntelliJ IDEA's .idea & .iml project files
-    id 'idea'
+	id 'org.springframework.boot' version '2.2.7.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'com.google.protobuf' version '0.8.8'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
+group = 'alistar.moneysave'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '12'
 
 repositories {
-    maven { // The google mirror is less flaky than mavenCentral()
-        url "https://maven-central.storage-download.googleapis.com/repos/central/data/" }
-    mavenCentral()
-    mavenLocal()
+	maven { url "https://maven-central.storage-download.googleapis.com/repos/central/data/" }
+	mavenCentral()
 }
 
 def grpcVersion = '1.29.0' // CURRENT_GRPC_VERSION
@@ -24,41 +19,49 @@ def protobufVersion = '3.11.0'
 def protocVersion = protobufVersion
 
 dependencies {
-    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
-    implementation "io.grpc:grpc-stub:${grpcVersion}"
-    compileOnly "javax.annotation:javax.annotation-api:1.2"
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+	implementation "io.grpc:grpc-stub:${grpcVersion}"
+	compileOnly "javax.annotation:javax.annotation-api:1.2"
 
-    // examples/advanced need this for JsonFormat
-    implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+	// examples/advanced need this for JsonFormat
+	implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
 
-    implementation "io.grpc:grpc-services:${grpcVersion}"
+	implementation "io.grpc:grpc-services:${grpcVersion}"
 
-    runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
+	runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
 
-    implementation "org.hibernate:hibernate-core:5.4.15.Final"
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.4'
+	implementation "org.hibernate:hibernate-core:5.4.15.Final"
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.4'
 
-    testImplementation "io.grpc:grpc-testing:${grpcVersion}"
-    testImplementation "junit:junit:4.12"
-    testImplementation "org.mockito:mockito-core:2.28.2"
+	testImplementation "io.grpc:grpc-testing:${grpcVersion}"
+	testImplementation "junit:junit:4.12"
+	testImplementation "org.mockito:mockito-core:2.28.2"
 }
 
 protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
-    plugins {
-        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
-    }
-    generateProtoTasks {
-        all()*.plugins { grpc {} }
-    }
+	protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+	plugins {
+		grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+	}
+	generateProtoTasks {
+		all()*.plugins { grpc {} }
+	}
 }
 
 // Inform IDEs like IntelliJ IDEA, Eclipse or NetBeans about the generated code.
 sourceSets {
-    main {
-        java {
-            srcDirs 'build/generated/source/proto/main/grpc'
-            srcDirs 'build/generated/source/proto/main/java'
-        }
-    }
+	main {
+		java {
+			srcDirs 'build/generated/source/proto/main/grpc'
+			srcDirs 'build/generated/source/proto/main/java'
+		}
+	}
+}
+
+test {
+	useJUnitPlatform()
 }
