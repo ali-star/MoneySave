@@ -58,27 +58,27 @@ public final class BankServiceGrpc {
     return getCreateBankMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
+  private static volatile io.grpc.MethodDescriptor<alistar.moneysave.bank.GetBanksRequest,
       alistar.moneysave.bank.GetBanksReplay> getGetBanksMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetBanks",
-      requestType = com.google.protobuf.Empty.class,
+      requestType = alistar.moneysave.bank.GetBanksRequest.class,
       responseType = alistar.moneysave.bank.GetBanksReplay.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.protobuf.Empty,
+  public static io.grpc.MethodDescriptor<alistar.moneysave.bank.GetBanksRequest,
       alistar.moneysave.bank.GetBanksReplay> getGetBanksMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Empty, alistar.moneysave.bank.GetBanksReplay> getGetBanksMethod;
+    io.grpc.MethodDescriptor<alistar.moneysave.bank.GetBanksRequest, alistar.moneysave.bank.GetBanksReplay> getGetBanksMethod;
     if ((getGetBanksMethod = BankServiceGrpc.getGetBanksMethod) == null) {
       synchronized (BankServiceGrpc.class) {
         if ((getGetBanksMethod = BankServiceGrpc.getGetBanksMethod) == null) {
           BankServiceGrpc.getGetBanksMethod = getGetBanksMethod =
-              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, alistar.moneysave.bank.GetBanksReplay>newBuilder()
+              io.grpc.MethodDescriptor.<alistar.moneysave.bank.GetBanksRequest, alistar.moneysave.bank.GetBanksReplay>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetBanks"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Empty.getDefaultInstance()))
+                  alistar.moneysave.bank.GetBanksRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   alistar.moneysave.bank.GetBanksReplay.getDefaultInstance()))
               .setSchemaDescriptor(new BankServiceMethodDescriptorSupplier("GetBanks"))
@@ -152,7 +152,7 @@ public final class BankServiceGrpc {
      * Return list of banks
      * </pre>
      */
-    public void getBanks(com.google.protobuf.Empty request,
+    public void getBanks(alistar.moneysave.bank.GetBanksRequest request,
         io.grpc.stub.StreamObserver<alistar.moneysave.bank.GetBanksReplay> responseObserver) {
       asyncUnimplementedUnaryCall(getGetBanksMethod(), responseObserver);
     }
@@ -170,7 +170,7 @@ public final class BankServiceGrpc {
             getGetBanksMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.google.protobuf.Empty,
+                alistar.moneysave.bank.GetBanksRequest,
                 alistar.moneysave.bank.GetBanksReplay>(
                   this, METHODID_GET_BANKS)))
           .build();
@@ -207,7 +207,7 @@ public final class BankServiceGrpc {
      * Return list of banks
      * </pre>
      */
-    public void getBanks(com.google.protobuf.Empty request,
+    public void getBanks(alistar.moneysave.bank.GetBanksRequest request,
         io.grpc.stub.StreamObserver<alistar.moneysave.bank.GetBanksReplay> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetBanksMethod(), getCallOptions()), request, responseObserver);
@@ -243,7 +243,7 @@ public final class BankServiceGrpc {
      * Return list of banks
      * </pre>
      */
-    public alistar.moneysave.bank.GetBanksReplay getBanks(com.google.protobuf.Empty request) {
+    public alistar.moneysave.bank.GetBanksReplay getBanks(alistar.moneysave.bank.GetBanksRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetBanksMethod(), getCallOptions(), request);
     }
@@ -280,7 +280,7 @@ public final class BankServiceGrpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<alistar.moneysave.bank.GetBanksReplay> getBanks(
-        com.google.protobuf.Empty request) {
+        alistar.moneysave.bank.GetBanksRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetBanksMethod(), getCallOptions()), request);
     }
@@ -311,7 +311,7 @@ public final class BankServiceGrpc {
               (io.grpc.stub.StreamObserver<alistar.moneysave.bank.CreateBankReply>) responseObserver);
           break;
         case METHODID_GET_BANKS:
-          serviceImpl.getBanks((com.google.protobuf.Empty) request,
+          serviceImpl.getBanks((alistar.moneysave.bank.GetBanksRequest) request,
               (io.grpc.stub.StreamObserver<alistar.moneysave.bank.GetBanksReplay>) responseObserver);
           break;
         default:

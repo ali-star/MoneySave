@@ -11,6 +11,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import java.util.List;
+
 public class Repository implements DataSource {
 
     private Data data;
@@ -136,5 +138,13 @@ public class Repository implements DataSource {
         double averageSpendPerDay = (data.getTotalMoney() - data.getReducedMoney()) / daysInMonth;
         double moneySpent = (data.getTotalMoney() - data.getReducedMoney()) - data.getLeftMoney();
         data.setSavedMoney((averageSpendPerDay * today) - moneySpent);*/
+    }
+
+    public List<Bank> getBanks(int limit, int offset) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Bank");
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return query.getResultList();
     }
 }
