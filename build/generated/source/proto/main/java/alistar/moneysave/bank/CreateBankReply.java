@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CreateBankReply() {
-    message_ = "";
   }
 
   @java.lang.Override
@@ -50,9 +49,16 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            alistar.moneysave.bank.Bank.Builder subBuilder = null;
+            if (bank_ != null) {
+              subBuilder = bank_.toBuilder();
+            }
+            bank_ = input.readMessage(alistar.moneysave.bank.Bank.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(bank_);
+              bank_ = subBuilder.buildPartial();
+            }
 
-            message_ = s;
             break;
           }
           default: {
@@ -87,40 +93,27 @@ private static final long serialVersionUID = 0L;
             alistar.moneysave.bank.CreateBankReply.class, alistar.moneysave.bank.CreateBankReply.Builder.class);
   }
 
-  public static final int MESSAGE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object message_;
+  public static final int BANK_FIELD_NUMBER = 1;
+  private alistar.moneysave.bank.Bank bank_;
   /**
-   * <code>string message = 1;</code>
-   * @return The message.
+   * <code>.bank.Bank bank = 1;</code>
+   * @return Whether the bank field is set.
    */
-  public java.lang.String getMessage() {
-    java.lang.Object ref = message_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      message_ = s;
-      return s;
-    }
+  public boolean hasBank() {
+    return bank_ != null;
   }
   /**
-   * <code>string message = 1;</code>
-   * @return The bytes for message.
+   * <code>.bank.Bank bank = 1;</code>
+   * @return The bank.
    */
-  public com.google.protobuf.ByteString
-      getMessageBytes() {
-    java.lang.Object ref = message_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      message_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public alistar.moneysave.bank.Bank getBank() {
+    return bank_ == null ? alistar.moneysave.bank.Bank.getDefaultInstance() : bank_;
+  }
+  /**
+   * <code>.bank.Bank bank = 1;</code>
+   */
+  public alistar.moneysave.bank.BankOrBuilder getBankOrBuilder() {
+    return getBank();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -137,8 +130,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getMessageBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
+    if (bank_ != null) {
+      output.writeMessage(1, getBank());
     }
     unknownFields.writeTo(output);
   }
@@ -149,8 +142,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getMessageBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
+    if (bank_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, getBank());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -167,8 +161,11 @@ private static final long serialVersionUID = 0L;
     }
     alistar.moneysave.bank.CreateBankReply other = (alistar.moneysave.bank.CreateBankReply) obj;
 
-    if (!getMessage()
-        .equals(other.getMessage())) return false;
+    if (hasBank() != other.hasBank()) return false;
+    if (hasBank()) {
+      if (!getBank()
+          .equals(other.getBank())) return false;
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -180,8 +177,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getMessage().hashCode();
+    if (hasBank()) {
+      hash = (37 * hash) + BANK_FIELD_NUMBER;
+      hash = (53 * hash) + getBank().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -315,8 +314,12 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      message_ = "";
-
+      if (bankBuilder_ == null) {
+        bank_ = null;
+      } else {
+        bank_ = null;
+        bankBuilder_ = null;
+      }
       return this;
     }
 
@@ -343,7 +346,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public alistar.moneysave.bank.CreateBankReply buildPartial() {
       alistar.moneysave.bank.CreateBankReply result = new alistar.moneysave.bank.CreateBankReply(this);
-      result.message_ = message_;
+      if (bankBuilder_ == null) {
+        result.bank_ = bank_;
+      } else {
+        result.bank_ = bankBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -392,9 +399,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(alistar.moneysave.bank.CreateBankReply other) {
       if (other == alistar.moneysave.bank.CreateBankReply.getDefaultInstance()) return this;
-      if (!other.getMessage().isEmpty()) {
-        message_ = other.message_;
-        onChanged();
+      if (other.hasBank()) {
+        mergeBank(other.getBank());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -425,80 +431,123 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object message_ = "";
+    private alistar.moneysave.bank.Bank bank_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        alistar.moneysave.bank.Bank, alistar.moneysave.bank.Bank.Builder, alistar.moneysave.bank.BankOrBuilder> bankBuilder_;
     /**
-     * <code>string message = 1;</code>
-     * @return The message.
+     * <code>.bank.Bank bank = 1;</code>
+     * @return Whether the bank field is set.
      */
-    public java.lang.String getMessage() {
-      java.lang.Object ref = message_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        message_ = s;
-        return s;
+    public boolean hasBank() {
+      return bankBuilder_ != null || bank_ != null;
+    }
+    /**
+     * <code>.bank.Bank bank = 1;</code>
+     * @return The bank.
+     */
+    public alistar.moneysave.bank.Bank getBank() {
+      if (bankBuilder_ == null) {
+        return bank_ == null ? alistar.moneysave.bank.Bank.getDefaultInstance() : bank_;
       } else {
-        return (java.lang.String) ref;
+        return bankBuilder_.getMessage();
       }
     }
     /**
-     * <code>string message = 1;</code>
-     * @return The bytes for message.
+     * <code>.bank.Bank bank = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getMessageBytes() {
-      java.lang.Object ref = message_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        message_ = b;
-        return b;
+    public Builder setBank(alistar.moneysave.bank.Bank value) {
+      if (bankBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bank_ = value;
+        onChanged();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        bankBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.bank.Bank bank = 1;</code>
+     */
+    public Builder setBank(
+        alistar.moneysave.bank.Bank.Builder builderForValue) {
+      if (bankBuilder_ == null) {
+        bank_ = builderForValue.build();
+        onChanged();
+      } else {
+        bankBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.bank.Bank bank = 1;</code>
+     */
+    public Builder mergeBank(alistar.moneysave.bank.Bank value) {
+      if (bankBuilder_ == null) {
+        if (bank_ != null) {
+          bank_ =
+            alistar.moneysave.bank.Bank.newBuilder(bank_).mergeFrom(value).buildPartial();
+        } else {
+          bank_ = value;
+        }
+        onChanged();
+      } else {
+        bankBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.bank.Bank bank = 1;</code>
+     */
+    public Builder clearBank() {
+      if (bankBuilder_ == null) {
+        bank_ = null;
+        onChanged();
+      } else {
+        bank_ = null;
+        bankBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.bank.Bank bank = 1;</code>
+     */
+    public alistar.moneysave.bank.Bank.Builder getBankBuilder() {
+      
+      onChanged();
+      return getBankFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.bank.Bank bank = 1;</code>
+     */
+    public alistar.moneysave.bank.BankOrBuilder getBankOrBuilder() {
+      if (bankBuilder_ != null) {
+        return bankBuilder_.getMessageOrBuilder();
+      } else {
+        return bank_ == null ?
+            alistar.moneysave.bank.Bank.getDefaultInstance() : bank_;
       }
     }
     /**
-     * <code>string message = 1;</code>
-     * @param value The message to set.
-     * @return This builder for chaining.
+     * <code>.bank.Bank bank = 1;</code>
      */
-    public Builder setMessage(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      message_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string message = 1;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearMessage() {
-      
-      message_ = getDefaultInstance().getMessage();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string message = 1;</code>
-     * @param value The bytes for message to set.
-     * @return This builder for chaining.
-     */
-    public Builder setMessageBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      message_ = value;
-      onChanged();
-      return this;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        alistar.moneysave.bank.Bank, alistar.moneysave.bank.Bank.Builder, alistar.moneysave.bank.BankOrBuilder> 
+        getBankFieldBuilder() {
+      if (bankBuilder_ == null) {
+        bankBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            alistar.moneysave.bank.Bank, alistar.moneysave.bank.Bank.Builder, alistar.moneysave.bank.BankOrBuilder>(
+                getBank(),
+                getParentForChildren(),
+                isClean());
+        bank_ = null;
+      }
+      return bankBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

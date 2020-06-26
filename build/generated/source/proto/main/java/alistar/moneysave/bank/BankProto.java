@@ -50,17 +50,17 @@ public final class BankProto {
     java.lang.String[] descriptorData = {
       "\n\nbank.proto\022\004bank\032\033google/protobuf/empt" +
       "y.proto\"6\n\021CreateBankRequest\022\014\n\004name\030\001 \001" +
-      "(\t\022\023\n\013persianName\030\002 \001(\t\"\"\n\017CreateBankRep" +
-      "ly\022\017\n\007message\030\001 \001(\t\"5\n\004Bank\022\n\n\002id\030\001 \001(\t\022" +
-      "\014\n\004name\030\002 \001(\t\022\023\n\013persianName\030\003 \001(\t\"0\n\017Ge" +
-      "tBanksRequest\022\r\n\005limit\030\001 \001(\005\022\016\n\006offset\030\002" +
-      " \001(\005\"+\n\016GetBanksReplay\022\031\n\005banks\030\001 \003(\0132\n." +
-      "bank.Bank2\210\001\n\013BankService\022>\n\nCreateBank\022" +
-      "\027.bank.CreateBankRequest\032\025.bank.CreateBa" +
-      "nkReply\"\000\0229\n\010GetBanks\022\025.bank.GetBanksReq" +
-      "uest\032\024.bank.GetBanksReplay\"\000B+\n\026alistar." +
-      "moneysave.bankB\tBankProtoP\001\242\002\003BNKb\006proto" +
-      "3"
+      "(\t\022\023\n\013persianName\030\002 \001(\t\"+\n\017CreateBankRep" +
+      "ly\022\030\n\004bank\030\001 \001(\0132\n.bank.Bank\"5\n\004Bank\022\n\n\002" +
+      "id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\023\n\013persianName\030\003 " +
+      "\001(\t\"0\n\017GetBanksRequest\022\r\n\005limit\030\001 \001(\005\022\016\n" +
+      "\006offset\030\002 \001(\005\"+\n\016GetBanksReplay\022\031\n\005banks" +
+      "\030\001 \003(\0132\n.bank.Bank2\210\001\n\013BankService\022>\n\nCr" +
+      "eateBank\022\027.bank.CreateBankRequest\032\025.bank" +
+      ".CreateBankReply\"\000\0229\n\010GetBanks\022\025.bank.Ge" +
+      "tBanksRequest\032\024.bank.GetBanksReplay\"\000B+\n" +
+      "\026alistar.moneysave.bankB\tBankProtoP\001\242\002\003B" +
+      "NKb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -78,7 +78,7 @@ public final class BankProto {
     internal_static_bank_CreateBankReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bank_CreateBankReply_descriptor,
-        new java.lang.String[] { "Message", });
+        new java.lang.String[] { "Bank", });
     internal_static_bank_Bank_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_bank_Bank_fieldAccessorTable = new

@@ -8,14 +8,17 @@ public interface CreateBankReplyOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string message = 1;</code>
-   * @return The message.
+   * <code>.bank.Bank bank = 1;</code>
+   * @return Whether the bank field is set.
    */
-  java.lang.String getMessage();
+  boolean hasBank();
   /**
-   * <code>string message = 1;</code>
-   * @return The bytes for message.
+   * <code>.bank.Bank bank = 1;</code>
+   * @return The bank.
    */
-  com.google.protobuf.ByteString
-      getMessageBytes();
+  alistar.moneysave.bank.Bank getBank();
+  /**
+   * <code>.bank.Bank bank = 1;</code>
+   */
+  alistar.moneysave.bank.BankOrBuilder getBankOrBuilder();
 }

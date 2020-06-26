@@ -1,1 +1,5 @@
 rootProject.name = 'MoneySave'
+include 'domain'
+include 'data'
+include 'main'
+
